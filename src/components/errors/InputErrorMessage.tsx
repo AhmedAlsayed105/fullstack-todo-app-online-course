@@ -1,6 +1,6 @@
 interface Iprop
 {
-    msg:string
+    msg?:string
 }
 
 export default function InputErrorMessage({msg}:Iprop) {

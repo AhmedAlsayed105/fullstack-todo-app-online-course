@@ -3,16 +3,22 @@ import InputErrorMessage from "../components/errors/InputErrorMessage";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { useForm, SubmitHandler } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { schemaValid } from "../Vaildation";
 
 interface IFormInput {
   userName: string
   email: string
-  password: number
+  password: string
 }
 const RegisterPage = () => {
   // const { register, handleSubmit } = useForm<IFormInput>()
   
-  const {register,formState: { errors },handleSubmit} = useForm<IFormInput>()
+  const {register,formState: { errors },handleSubmit} = useForm<IFormInput>(
+    {
+      resolver: yupResolver(schemaValid),
+    }
+  )
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
 
@@ -22,7 +28,7 @@ console.log(errors);
 const formData = FORMREGISTER.map(({name,placeholder,type,validation},index)=>(
      <div key={index}>
          <Input type={type} placeholder={placeholder} {...register(name ,{ validation })} />
-        {errors?.[name]?.message && <InputErrorMessage msg={name} />}
+        {errors[name] && <InputErrorMessage msg={errors[name]?.message} />}
      </div>
 
 ))
