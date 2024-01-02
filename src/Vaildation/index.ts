@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export const schemaValid = yup
   .object({
-    userName: yup
+    username: yup
       .string()
       .required("UserName Is Required")
       .min(5, "UserName Should be at least 5 Characters. "),

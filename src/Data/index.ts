@@ -2,8 +2,8 @@ import IPropRegister from "../Interface"
 
 const FORMREGISTER:IPropRegister[] = [
     {
-        name:"userName",
-        placeholder:"userName",
+        name:"username",
+        placeholder:"username",
         type:"text",
         validation:{
             required:true,

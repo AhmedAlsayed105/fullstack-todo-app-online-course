@@ -1,6 +1,6 @@
 export default interface IPropRegister 
 {
-    name:  'userName' | 'email'| 'password'
+    name:  'username' | 'email'| 'password'
     placeholder:string,
     type:string,
     validation:{

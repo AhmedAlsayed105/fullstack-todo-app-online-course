@@ -2,42 +2,84 @@ import FORMREGISTER from "../Data";
 import InputErrorMessage from "../components/errors/InputErrorMessage";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
-import { useForm, SubmitHandler } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
+import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaValid } from "../Vaildation";
+import AxiosInstance from "../Axios/Axios.config";
+import { Toaster } from "react-hot-toast";
+
+import toast from "react-hot-toast";
 
 interface IFormInput {
-  userName: string
-  email: string
-  password: string
+  username: string;
+  email: string;
+  password: string;
 }
 const RegisterPage = () => {
-  // const { register, handleSubmit } = useForm<IFormInput>()
-  
-  const {register,formState: { errors },handleSubmit} = useForm<IFormInput>(
-    {
-      resolver: yupResolver(schemaValid),
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IFormInput>({
+    resolver: yupResolver(schemaValid),
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  //Handel
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    setIsLoading(true)
+    
+
+    try {
+      const { status } = await AxiosInstance.post("/auth/local/register", data);
+      if (status === 200) {
+        toast.success("You will navigate to the login page after 4 seconds to login!", {
+          duration: 4000,
+          position: "bottom-center",
+          // Change colors of success/error/loading icon
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            width: "fit-content",
+          },
+        });
+        
+      }
+    } catch (err) {
+      // ToDo
+
+      // toast.error(err?.response.data.error.message, { duration: 4000 });
+      console.log(err);
+    } finally{
+      setIsLoading(false)
     }
-  )
+  };
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
+  console.log(isLoading);
 
-console.log(errors);
-
-// render
-const formData = FORMREGISTER.map(({name,placeholder,type,validation},index)=>(
-     <div key={index}>
-         <Input type={type} placeholder={placeholder} {...register(name ,{ validation })} />
+  // render
+  const formData = FORMREGISTER.map(
+    ({ name, placeholder, type, validation }, index) => (
+      <div key={index}>
+        <Input
+          type={type}
+          placeholder={placeholder}
+          {...register(name, { validation })}
+        />
         {errors[name] && <InputErrorMessage msg={errors[name]?.message} />}
-     </div>
-
-))
+      </div>
+    )
+  );
   return (
     <div className="max-w-md mx-auto">
-      <h2 className="text-center mb-4 text-3xl font-semibold">Register to get access!</h2>
-      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} >
+      <Toaster />
+      <h2 className="text-center mb-4 text-3xl font-semibold">
+        Register to get access!
+      </h2>
+      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {formData}
-        <Button fullWidth>Register</Button>
+        <Button fullWidth isLoading={isLoading}>Register</Button>
       </form>
     </div>
   );
