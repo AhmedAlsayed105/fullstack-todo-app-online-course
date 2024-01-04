@@ -1,4 +1,4 @@
-export default interface IPropRegister 
+export  interface IPropRegister 
 {
     name:  'username' | 'email'| 'password'
     placeholder:string,
@@ -7,5 +7,13 @@ export default interface IPropRegister
         required?:boolean,
         minLength?:number,
         pattern?:RegExp,
+    }
+}
+
+export interface HandelErrInterFace 
+{
+    error:{
+
+        message?:string
     }
 }

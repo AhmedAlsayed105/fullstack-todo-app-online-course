@@ -1,4 +1,4 @@
-import IPropRegister from "../Interface"
+import {IPropRegister} from "../Interface"
 
 const FORMREGISTER:IPropRegister[] = [
     {

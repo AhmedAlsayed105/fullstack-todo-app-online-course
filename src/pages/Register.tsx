@@ -8,9 +8,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaValid } from "../Vaildation";
 import AxiosInstance from "../Axios/Axios.config";
 import { Toaster } from "react-hot-toast";
-
 import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
+import {HandelErrInterFace} from "../Interface/index"
 interface IFormInput {
   username: string;
   email: string;
@@ -48,9 +49,9 @@ const RegisterPage = () => {
       }
     } catch (err) {
       // ToDo
-
-      // toast.error(err?.response.data.error.message, { duration: 4000 });
-      console.log(err);
+        const errObj = err as AxiosError<HandelErrInterFace>
+      toast.error(`${errObj.response?.data.error.message}`, { duration: 4000 });
+      console.log(errObj.response?.data.error.message);
     } finally{
       setIsLoading(false)
     }
