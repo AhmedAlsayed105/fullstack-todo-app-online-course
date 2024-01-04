@@ -1,4 +1,4 @@
-import FORMREGISTER from "../Data";
+import {FORMREGISTER} from "../Data";
 import InputErrorMessage from "../components/errors/InputErrorMessage";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";

@@ -9,6 +9,17 @@ export  interface IPropRegister
         pattern?:RegExp,
     }
 }
+export  interface IPropLogin 
+{
+    name: 'identifier'| 'password'
+    placeholder:string,
+    type:string,
+    validation:{
+        required?:boolean,
+        minLength?:number,
+        pattern?:RegExp,
+    }
+}
 
 export interface HandelErrInterFace 
 {

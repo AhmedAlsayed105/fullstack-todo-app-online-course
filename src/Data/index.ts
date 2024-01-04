@@ -1,6 +1,6 @@
-import {IPropRegister} from "../Interface"
+import {IPropLogin, IPropRegister} from "../Interface"
 
-const FORMREGISTER:IPropRegister[] = [
+export  const FORMREGISTER:IPropRegister[] = [
     {
         name:"username",
         placeholder:"username",
@@ -29,4 +29,25 @@ const FORMREGISTER:IPropRegister[] = [
         },
     }
 ]
-export default FORMREGISTER
+// export  FORMREGISTER
+
+export  const FORMRLOGIN:IPropLogin[] = [
+    {
+        name:"identifier",
+        placeholder:"Email address",
+        type:"text",
+        validation:{
+            required:true,
+            pattern:/^[a-zA-Z]{2,}@[a-zA-Z]+\.[a-zA-Z]{2,}$/,
+        },
+    },
+    {
+        name:"password",
+        placeholder:"Password",
+        type:"text",
+        validation:{
+            required:true,
+            minLength:6,
+        },
+    }
+]
