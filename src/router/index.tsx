@@ -6,9 +6,15 @@ import ErrorHandler from "../components/errors/ErrorHandler";
 import HomePage from "../pages";
 import LoginPage from "../pages/Login"; 
 import RegisterPage from "../pages/Register";
+import Profile from "../pages/Profile";
 
-const isLoggedIn = false;
-const userData: { email: string } | null = isLoggedIn ? { email: "email@gmail.com" } : null;
+// localStorage
+
+const getUserLocalStorage =  window.localStorage.getItem("token");
+const getTokenLocalStorage = getUserLocalStorage ? JSON.parse(getUserLocalStorage) : null;
+
+// console.log(getTokenLocalStorage);
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,15 +24,23 @@ const router = createBrowserRouter(
         <Route
           index
           element={
-            <ProtectedRoute isAllowed={isLoggedIn} redirectPath="/login" data={userData}>
+            <ProtectedRoute  isAllowed={getTokenLocalStorage} redirectPath="/login" >
               <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="Profile"
+          element={
+            <ProtectedRoute  isAllowed={getTokenLocalStorage} redirectPath="/login" >
+              <Profile/>
             </ProtectedRoute>
           }
         />
         <Route
           path="login"
           element={
-            <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/" data={userData}>
+            <ProtectedRoute isAllowed={!getTokenLocalStorage} redirectPath="/" >
               <LoginPage />
             </ProtectedRoute>
           }
@@ -34,7 +48,7 @@ const router = createBrowserRouter(
         <Route
           path="register"
           element={
-            <ProtectedRoute isAllowed={!isLoggedIn} redirectPath="/login" data={userData}>
+            <ProtectedRoute isAllowed={!getTokenLocalStorage} redirectPath="/login" >
               <RegisterPage />
             </ProtectedRoute>
           }

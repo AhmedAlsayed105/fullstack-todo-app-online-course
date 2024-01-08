@@ -32,10 +32,10 @@ const onSubmit: SubmitHandler<IFormInput> = async (data) => {
   
 
   try {
-    const { status } = await AxiosInstance.post("/auth/local", data);
+    const { status , data : dataToken } = await AxiosInstance.post("/auth/local", data);
     if (status === 200) {
-      toast.success("You will navigate to the Home page after 2 seconds to login!", {
-        duration: 4000,
+      toast.success("You will navigate to the Home page after 2 seconds!", {
+        duration: 2000,
         position: "bottom-center",
         // Change colors of success/error/loading icon
         style: {
@@ -44,19 +44,25 @@ const onSubmit: SubmitHandler<IFormInput> = async (data) => {
           width: "fit-content",
         },
       });
-      
     }
+    // add token to localStorage
+    window.localStorage.setItem("token",JSON.stringify(dataToken))
+    
+    // to location
+    setTimeout(() => {
+      location.replace("/");
+    }, 2000);
   } catch (err) {
     // ToDo
       const errObj = err as AxiosError<HandelErrInterFace>
     toast.error(`${errObj.response?.data.error.message}`, { duration: 4000 });
-    console.log(errObj);
+    // console.log(errObj);
   } finally{
     setIsLoading(false)
   }
 };
 
-console.log(isLoading);
+// console.log(isLoading);
 
 // render
 const formData = FORMRLOGIN.map(
@@ -78,7 +84,6 @@ const formData = FORMRLOGIN.map(
              {
               formData
              }
-
         <Button fullWidth isLoading={isLoading}>Login</Button>
       </form>
     </div>

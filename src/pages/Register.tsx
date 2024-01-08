@@ -12,12 +12,16 @@ import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 
 import {HandelErrInterFace} from "../Interface/index"
+import { useNavigate } from "react-router-dom";
 interface IFormInput {
   username: string;
   email: string;
   password: string;
 }
 const RegisterPage = () => {
+
+const navigate = useNavigate()
+
   const {
     register,
     formState: { errors },
@@ -35,8 +39,8 @@ const RegisterPage = () => {
     try {
       const { status } = await AxiosInstance.post("/auth/local/register", data);
       if (status === 200) {
-        toast.success("You will navigate to the login page after 4 seconds to login!", {
-          duration: 4000,
+        toast.success("You will navigate to the login page after 2 seconds to login!", {
+          duration: 2000,
           position: "bottom-center",
           // Change colors of success/error/loading icon
           style: {
@@ -45,8 +49,12 @@ const RegisterPage = () => {
             width: "fit-content",
           },
         });
-        
       }
+      // location to 
+      setTimeout(()=>{
+        navigate('/login')
+      },2000)
+
     } catch (err) {
       // ToDo
         const errObj = err as AxiosError<HandelErrInterFace>
@@ -57,7 +65,7 @@ const RegisterPage = () => {
     }
   };
 
-  console.log(isLoading);
+  // console.log(isLoading);
 
   // render
   const formData = FORMREGISTER.map(

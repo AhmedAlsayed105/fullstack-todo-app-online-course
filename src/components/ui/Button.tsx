@@ -30,7 +30,7 @@ const buttonVariants = cva("flex items-center justify-center rounded-md font-med
 
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   children: ReactNode;
-  isLoading:boolean
+  isLoading?:boolean
 }
 
 const Button = ({ variant, size, fullWidth,isLoading, className, children, ...props }: ButtonProps) => {
