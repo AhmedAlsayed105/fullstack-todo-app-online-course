@@ -1,24 +1,24 @@
 import Button from "./ui/Button";
 
-import AxiosInstance from "../Axios/Axios.config";
-import { useQuery } from "@tanstack/react-query";
+// import AxiosInstance from "../Axios/Axios.config";
+// import { useQuery } from "@tanstack/react-query";
+import CustomHookAuth from "../Hooks/CustomHookAuth";
 
 const TodoList = () => {
   const getUserLocalStorage =  window.localStorage.getItem("token");
   const getTokenLocalStorage = getUserLocalStorage ?   JSON.parse(getUserLocalStorage) : null
-  
-  // start ReactQuery
-  const { isLoading, error, data } = useQuery({
-    queryKey: ['todos'],
-    queryFn: async () =>
-    await  AxiosInstance.get("/users/me?populate=todos",{
-      headers:{
-        Authorization:`Bearer ${getTokenLocalStorage.jwt}`
-      }
-    })
-    
-  })
 
+  
+  const { isLoading, error, data }  =CustomHookAuth({
+    keys:["todos"],
+    url:"/users/me?populate=todos",
+    config:{
+      headers:{
+        Authorization: `Bearer ${getTokenLocalStorage.jwt}`,
+      }
+    }
+  })
+    
   if (isLoading) return 'Loading...'
 
   if (error) return 'An error has occurred: ' + error.message
@@ -30,7 +30,7 @@ const TodoList = () => {
       
       data?.data.todos.length > 0 ?
       (
-         data.data.todos.map((todo,index) =>(
+         data?.data.todos.map((todo,index) =>(
            <div key={todo.id} className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100">
              <p className="w-full font-semibold">{index + 1} - {todo.title}</p>
              <div className="flex items-center justify-end w-full space-x-3">
