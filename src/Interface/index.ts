@@ -28,3 +28,8 @@ export interface HandelErrInterFace
         message?:string
     }
 }
+export interface ITodo {
+    id:number,
+    title: string,
+    description: string,
+  }

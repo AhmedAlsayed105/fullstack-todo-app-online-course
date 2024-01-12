@@ -1,3 +1,4 @@
+// import { schemaValid } from './index';
 import * as yup from "yup";
 
 export const schemaValid = yup
@@ -36,4 +37,9 @@ export const schemaValidLogin = yup
   })
   .required();
 
-//   /^[a-zA-Z]{2,}@[a-zA-Z]+\.[a-zA-Z]{2,}$/
+export const schemaValidEdit = yup
+.object({
+  title: yup.string().required("Title Is Required").min(6,"title Should be at least 6 Characters."),
+  description: yup.string().required("description Is Required").min(10, "UserName Should be at least 10 Characters."),
+})
+.required()

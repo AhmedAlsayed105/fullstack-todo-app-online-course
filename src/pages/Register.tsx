@@ -13,6 +13,7 @@ import { AxiosError } from "axios";
 
 import {HandelErrInterFace} from "../Interface/index"
 import { useNavigate } from "react-router-dom";
+
 interface IFormInput {
   username: string;
   email: string;
@@ -74,7 +75,7 @@ const navigate = useNavigate()
         <Input
           type={type}
           placeholder={placeholder}
-          {...register(name, { validation })}
+          {...register(name, { validation  })}
         />
         {errors[name] && <InputErrorMessage msg={errors[name]?.message} />}
       </div>

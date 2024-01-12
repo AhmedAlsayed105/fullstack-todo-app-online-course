@@ -16,3 +16,14 @@ export default function CustomHookAuth({ keys, url, config }: Iprop) {
 
   return result;
 }
+
+// another solution
+
+// export default function CustomHookAuth({ keys, url, config }: Iprop) {
+//     return  useQuery({
+//      queryKey: [keys],
+//      queryFn: async () => await AxiosInstance.get(url, config),
+//    });
+ 
+//  }
+ 
