@@ -1,11 +1,10 @@
 import { NavLink } from "react-router-dom";
+import Button from "./ui/Button";
 
 const Navbar = () => {
   // const getUserLocalStorage =  true
   const getUserLocalStorage =  window.localStorage.getItem("token");
   const getTokenLocalStorage = getUserLocalStorage ?   JSON.parse(getUserLocalStorage) : null
-  const UserName = getTokenLocalStorage ?  getTokenLocalStorage.user.username : "";
-  // console.log(UserName);
 
   const HandelLogOut = ()=>{
     window.localStorage.removeItem('token');
@@ -13,19 +12,24 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="max-w-lg mx-auto mt-7 mb-20 bg-indigo-600 px-3 py-5 rounded-md">
-      <ul className="flex items-center justify-between">
-        <li className="text-white duration-200 font-semibold text-lg">
-          <NavLink to="/">Home</NavLink>
-        </li>
+    <nav className="max-w-2xl mx-auto mt-7 mb-20 px-3 py-5">
+<ul className="flex items-center justify-between">
+  <li className="duration-200 font-semibold text-md text-gray-700">
+    <NavLink to="/">Home</NavLink>
+  </li>
 
-        {
+    {
           getTokenLocalStorage ? (
-            <div className="text-white font-bold ">
-            <NavLink to="profile">{UserName}</NavLink>
-            <button  onClick={HandelLogOut} className="ml-5 bg-red-500 p-1 rounded-md hover:bg-red-700">LogOut</button>
-            </div>
-          ) :
+  <div className="flex items-center space-x-6">
+  <li className="duration-200 text-md text-gray-700 font-semibold">
+    <NavLink to="todos">Todos</NavLink>
+  </li>
+  <li className="duration-200 text-md text-gray-700 font-semibold">
+    <NavLink to="Profile">Profile</NavLink>
+  </li>
+  <Button className="cursor-pointer" size={"sm"} onClick={HandelLogOut}>LogOut</Button>
+</div>        
+) :
           (
             <p className="flex items-center space-x-3">
           <li className="text-white duration-200 font-semibold text-lg">
@@ -39,8 +43,7 @@ const Navbar = () => {
         }
         
       </ul>
-    </nav>
-  );
+          </nav>
+  )
 };
-
-export default Navbar;
+export default Navbar

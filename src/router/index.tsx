@@ -7,6 +7,7 @@ import HomePage from "../pages";
 import LoginPage from "../pages/Login"; 
 import RegisterPage from "../pages/Register";
 import Profile from "../pages/Profile";
+import TodosPage from "../components/Todos";
 
 // localStorage
 
@@ -30,6 +31,15 @@ const router = createBrowserRouter(
           }
         />
         <Route
+        path="todos"
+        element={
+        <ProtectedRoute  isAllowed={getTokenLocalStorage} redirectPath="/login">
+          <TodosPage/>
+        </ProtectedRoute>
+        }
+        />
+
+        <Route
           path="Profile"
           element={
             <ProtectedRoute  isAllowed={getTokenLocalStorage} redirectPath="/login" >
@@ -45,6 +55,7 @@ const router = createBrowserRouter(
             </ProtectedRoute>
           }
         />
+
         <Route
           path="register"
           element={

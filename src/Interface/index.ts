@@ -29,7 +29,7 @@ export interface HandelErrInterFace
     }
 }
 export interface ITodo {
-    id:number,
+    id?:number,
     title: string,
     description: string,
   }
