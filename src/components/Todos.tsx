@@ -1,3 +1,4 @@
+import { useState } from "react";
 import CustomHookAuth from "../Hooks/CustomHookAuth"
 import Paginator from "../pages/Paginator";
 import Skelton from "./ui/Skelton";
@@ -8,10 +9,17 @@ export default function TodosPage() {
   const getTokenLocalStorage = getUserLocalStorage
     ? JSON.parse(getUserLocalStorage)
     : null;
+  const [Page, setPage] = useState<number>(1)
 
+  const onClickPrev = ()=>{
+    setPage(prev => prev - 1)
+  }
+  const onClickNext = ()=>{
+    setPage(prev => prev + 1)
+  }
 
   const {data,isLoading,error} = CustomHookAuth({
-    keys:["TodosPage"],
+    keys:["TodosPage",`${Page}`],
     url:"/todos",
     config:{
        headers: {
@@ -50,7 +58,7 @@ if (error) return "An error has occurred: " + error.message;
         <h1>No Todo Yet!</h1>
         )
     }
-        <Paginator/>
+        <Paginator page={Page} pageCount={3} onClickPrev={onClickPrev} onClickNext={onClickNext}   />
       </div>
   );
 }
