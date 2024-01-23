@@ -253,13 +253,13 @@ const handelSubmitRemove = async ()=>{
       }
       </div>
       {data?.data.todos.length > 0 ? (
-        data?.data.todos.map((todo:ITodo,index:number) => (
+        data?.data.todos.map((todo:ITodo) => (
           <div
             key={todo.id}
             className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100"
           >
             <p className="w-full font-semibold">
-              { index + 1} - {todo.title}
+              {todo.id} - {todo.title}
             </p>
             <div className="flex items-center justify-end w-full space-x-3">
               <Button

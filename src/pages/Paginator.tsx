@@ -4,16 +4,18 @@ interface IProps
   pageCount:number;
   onClickPrev:()=> void;
   onClickNext:()=> void;
+  isLoading:boolean;
 }
-export default function Paginator({page = 1,pageCount,onClickPrev,onClickNext} :IProps) {
+export default function Paginator({page = 1,pageCount,onClickPrev,onClickNext,isLoading} :IProps) {
     return (
         <div className="flex justify-center mx-auto">
+
           <button
             type="button"
             className="bg-gray-800 text-white rounded-l-md border-r border-gray-100 py-2 hover:bg-indigo-700 duration-300 hover:text-white px-3
             disabled:cursor-not-allowed disabled:bg-gray-400 hover:disabled:bg-gray-300
             "
-            disabled={page === 1}
+            disabled={isLoading || page === 1}
             onClick={onClickPrev}
           >
             <div className="flex flex-row align-middle">
@@ -32,7 +34,7 @@ export default function Paginator({page = 1,pageCount,onClickPrev,onClickNext} :
             className="bg-gray-800 text-white rounded-r-md py-2 border-l border-gray-200 hover:bg-indigo-700 duration-300 hover:text-white px-3 
             disabled:cursor-not-allowed disabled:bg-gray-400 hover:disabled:bg-gray-300
             "
-            disabled={pageCount === page}
+            disabled={isLoading || pageCount === page}
             onClick={onClickNext}
           >
             <div className="flex flex-row align-middle">
